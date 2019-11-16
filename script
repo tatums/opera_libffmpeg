@@ -1,0 +1,19 @@
+#!/bin/bash
+
+VERSION=0.42.4
+
+LIBFFMEG_INSTALL_DIR=/usr/lib/share/libffmpg
+OPERA_DIR=/usr/lib/x86_64-linux-gnu/opera
+
+curl -L -O https://github.com/iteufel/nwjs-ffmpeg-prebuilt/releases/download/$VERSION/$VERSION-linux-x64.zip
+unzip $VERSION-linux-x64.zip
+
+# Extract libffmpeg
+sudo mkdir -p $LIBFFMEG_INSTALL_DIR
+sudo mv libffmpeg.so $LIBFFMEG_INSTALL_DIR/libffmpeg_h264.so
+
+# Backup the original file just in case
+sudo mv $OPERA_DIR/libffmpeg.so $OPERA_DIR/libffmpeg.so.orig
+
+# Symlink the new libffmpeg file so Opera can use it
+sudo ln -s $LIBFFMEG_INSTALL_DIR/libffmpeg_h264.so $OPERA_DIR/libffmpeg.so
